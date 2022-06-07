@@ -12,16 +12,32 @@ const fruitSchema = mongoose.Schema({
 
 const Fruit = mongoose.model("Fruit", fruitSchema);
 
-const fruit = new Fruit({
+const mango = new Fruit({
     name: "Mango",
     rating: 9,
     review: "Truly is the king of the fruits"
 });
 
-fruit.save();
+const kiwi = new Fruit({
+    name: "Kiwi",
+    rating: 8,
+    review: "Highest in vitamin C"
+});
 
+const guava = new Fruit({
+    name: "Guava",
+    rating: 7,
+    review: "Great snack"
+});
 
-
+Fruit.insertMany([mango, kiwi, guava], function(err){
+    if(err){
+        console.log(err);
+    }
+    else{
+        console.log("Succfully inseted all the fruits to fuits DB");
+    }
+});
 
 
 

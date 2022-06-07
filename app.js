@@ -19,12 +19,22 @@ async function run() {
 
     const dbName = "fruitsDB"
     const database = client.db(dbName);
-    const fruits = database.collection("fruits");
+    const collection = database.collection("fruits");
     const docs = createDoc();
     const options = { ordered: true };
 
-    const result = await fruits.insertMany(docs, options);
+    const result = await collection.insertMany(docs, options);
     console.log(`${result.insertedCount} documents were inserted`);
+
+    const cursor = collection.find(); // reads all data
+
+    // print a message if no documents were found
+    if (collection.countDocuments({}) === 0) {
+      console.log("No documents found!");
+    }
+    // replace console.dir with your callback to access individual elements
+    await cursor.forEach(console.dir);
+
   } finally {
     await client.close();
   }

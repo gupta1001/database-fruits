@@ -1,67 +1,100 @@
 //jshint esversion:6 
 
-const { MongoClient } = require("mongodb");
+const mongoose = require("mongoose");
+
+mongoose.connect("mongodb://localhost:27017/fruitsDB", {useNewUrlParser: true});
+
+const fruitSchema = mongoose.Schema({
+    name: String,
+    rating: Number,
+    review: String
+});
+
+const Fruit = mongoose.model("Fruit", fruitSchema);
+
+const fruit = new Fruit({
+    name: "Mango",
+    rating: 9,
+    review: "Truly is the king of the fruits"
+});
+
+fruit.save();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Connection URI
-const uri = "mongodb://localhost:27017/?maxPoolSize=20&w=majority";
+// const uri = "mongodb://localhost:27017/?maxPoolSize=20&w=majority";
 
-// Create a new MongoClient
-const client = new MongoClient(uri);
+// // Create a new MongoClient
+// const client = new MongoClient(uri);
 
-async function run() {
-  try {
-    // Connect the client to the server
-    await client.connect();
+// async function run() {
+//   try {
+//     // Connect the client to the server
+//     await client.connect();
 
-    // Establish and verify connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Connected successfully to server");
+//     // Establish and verify connection
+//     await client.db("admin").command({ ping: 1 });
+//     console.log("Connected successfully to server");
 
-    const dbName = "fruitsDB"
-    const database = client.db(dbName);
-    const collection = database.collection("fruits");
-    const docs = createDoc();
-    const options = { ordered: true };
+//     const dbName = "fruitsDB"
+//     const database = client.db(dbName);
+//     const collection = database.collection("fruits");
+//     const docs = createDoc();
+//     const options = { ordered: true };
 
-    const result = await collection.insertMany(docs, options);
-    console.log(`${result.insertedCount} documents were inserted`);
+//     const result = await collection.insertMany(docs, options);
+//     console.log(`${result.insertedCount} documents were inserted`);
 
-    const cursor = collection.find(); // reads all data
+//     const cursor = collection.find(); // reads all data
 
-    // print a message if no documents were found
-    if (collection.countDocuments({}) === 0) {
-      console.log("No documents found!");
-    }
-    // replace console.dir with your callback to access individual elements
-    await cursor.forEach(console.dir);
+//     // print a message if no documents were found
+//     if (collection.countDocuments({}) === 0) {
+//       console.log("No documents found!");
+//     }
+//     // replace console.dir with your callback to access individual elements
+//     await cursor.forEach(console.dir);
 
-  } finally {
-    await client.close();
-  }
-}
+//   } finally {
+//     await client.close();
+//   }
+// }
 
-let createDoc =  function() {
-    const myObj = [
-        {
-            "_id": 1,
-            name: 'Apple', 
-            score: 8,
-            review: "Great fruit"
-        },
-        { 
-            "_id": 2,
-            name: 'Orange', 
-            score: 8,
-            review: "Yummy fruit"
-        },
-        { 
-            "_id": 3,
-            name: 'Banana', 
-            score: 8,
-            review: "Okayish"
-        }
-    ];
-    return myObj
-};
+// let createDoc =  function() {
+//     const myObj = [
+//         {
+//             "_id": 1,
+//             name: 'Apple', 
+//             score: 8,
+//             review: "Great fruit"
+//         },
+//         { 
+//             "_id": 2,
+//             name: 'Orange', 
+//             score: 8,
+//             review: "Yummy fruit"
+//         },
+//         { 
+//             "_id": 3,
+//             name: 'Banana', 
+//             score: 8,
+//             review: "Okayish"
+//         }
+//     ];
+//     return myObj
+// };
 
-run().catch(console.dir);
+// run().catch(console.dir);

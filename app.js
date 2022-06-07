@@ -30,12 +30,21 @@ const guava = new Fruit({
     review: "Great snack"
 });
 
-Fruit.insertMany([mango, kiwi, guava], function(err){
+// Fruit.insertMany([mango, kiwi, guava], function(err){
+//     if(err){
+//         console.log(err);
+//     }
+//     else{
+//         console.log("Succfully inseted all the fruits to fuits DB");
+//     }
+// });
+
+Fruit.find(function(err, fruits){
     if(err){
         console.log(err);
     }
     else{
-        console.log("Succfully inseted all the fruits to fuits DB");
+        console.log(fruits);
     }
 });
 

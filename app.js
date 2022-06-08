@@ -90,33 +90,52 @@ Fruit.deleteOne({name: "Guava"}, function(err){
 
 
 
-// example to delete many elements
+// example to delete many elements and 
+// add additional schema (fruitSchema) to person schema
+
+
 const personSchema = mongoose.Schema({
     name:{
         type: String,
         required: true
     },
+    faviouriteFruit: fruitSchema,
     age: Number
 });
 const Person = mongoose.model("Person", personSchema);
 
+const grapes = new Fruit({
+    name: "Grapes",
+    rating: 8,
+    review: "Healthy fruit!"
+});
+grapes.save();
+
 const person = new Person({
     name: "Janardan",
+    faviouriteFruit: grapes,   
     age: 29
 });
 
-// person.save();
+//person.save();
 
-Person.deleteMany({name:"Janardan"}, function(err){
+// Person.deleteMany({name:"Janardan"}, function(err){
+//     if(err){
+//         console.log(err);
+//     }
+//     else{
+//         console.log("Successfully deleted all the documents!");
+//     }
+// });
+
+Person.updateOne({_id: "62a0f385a67ce9dce9ca313f"}, {faviouriteFruit: grapes}, function(err){
     if(err){
         console.log(err);
     }
     else{
-        console.log("Successfully deleted all the documents!");
+        console.log("Successfully updated the documents!");
     }
 });
-
-
 
 
 

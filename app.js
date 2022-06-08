@@ -38,11 +38,12 @@ const Fruit = mongoose.model("Fruit", fruitSchema);
 // });
 
 const fruit = new Fruit({
+    name: "Peaches",
     rating: 2,
     review: "Never had a peach"
 });
 
-fruit.save()
+//fruit.save()
 
 // Fruit.insertMany([mango, kiwi, guava], function(err){
 //     if(err){
@@ -66,9 +67,54 @@ fruit.save()
 // });
 
 
+// updating the document using mongoose
+// Fruit.updateOne({_id: "62a0dba3987d7cad499d61ef"}, {name: "Dragon Fruit"}, function(err){
+//     if(err){
+//         console.log(err);
+//     }
+//     else{
+//         console.log("Successfully updated the document!");
+//     }
+// });
+
+//deleting the document using mongoose
+Fruit.deleteOne({name: "Guava"}, function(err){
+    if(err){
+        console.log(err);
+    }
+    else{
+        console.log("Successfully deleted the document!");
+    }
+});
 
 
 
+
+// example to delete many elements
+const personSchema = mongoose.Schema({
+    name:{
+        type: String,
+        required: true
+    },
+    age: Number
+});
+const Person = mongoose.model("Person", personSchema);
+
+const person = new Person({
+    name: "Janardan",
+    age: 29
+});
+
+// person.save();
+
+Person.deleteMany({name:"Janardan"}, function(err){
+    if(err){
+        console.log(err);
+    }
+    else{
+        console.log("Successfully deleted all the documents!");
+    }
+});
 
 
 

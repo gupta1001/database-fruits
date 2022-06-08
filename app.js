@@ -5,30 +5,44 @@ const mongoose = require("mongoose");
 mongoose.connect("mongodb://localhost:27017/fruitsDB", {useNewUrlParser: true});
 
 const fruitSchema = mongoose.Schema({
-    name: String,
-    rating: Number,
+    name: {
+        type: String,
+        required: [true, "Please check your data entry, no name specified"]
+    },
+    rating: {
+        type: Number,
+        min: 1,
+        max: 10
+    },
     review: String
 });
 
 const Fruit = mongoose.model("Fruit", fruitSchema);
 
-const mango = new Fruit({
-    name: "Mango",
-    rating: 9,
-    review: "Truly is the king of the fruits"
+// const mango = new Fruit({
+//     name: "Mango",
+//     rating: 9,
+//     review: "Truly is the king of the fruits"
+// });
+
+// const kiwi = new Fruit({
+//     name: "Kiwi",
+//     rating: 8,
+//     review: "Highest in vitamin C"
+// });
+
+// const guava = new Fruit({
+//     name: "Guava",
+//     rating: 7,
+//     review: "Great snack"
+// });
+
+const fruit = new Fruit({
+    rating: 2,
+    review: "Never had a peach"
 });
 
-const kiwi = new Fruit({
-    name: "Kiwi",
-    rating: 8,
-    review: "Highest in vitamin C"
-});
-
-const guava = new Fruit({
-    name: "Guava",
-    rating: 7,
-    review: "Great snack"
-});
+fruit.save()
 
 // Fruit.insertMany([mango, kiwi, guava], function(err){
 //     if(err){
@@ -39,14 +53,17 @@ const guava = new Fruit({
 //     }
 // });
 
-Fruit.find(function(err, fruits){
-    if(err){
-        console.log(err);
-    }
-    else{
-        console.log(fruits);
-    }
-});
+// Fruit.find(function(err, fruits){
+//     if(err){
+//         console.log(err);
+//     }
+//     else{
+//         mongoose.connection.close();
+//         fruits.forEach(function(fruit) {
+//             console.log(fruit.name);
+//         })
+//     }
+// });
 
 
 
